@@ -3,6 +3,7 @@ const express = require('express');
 const http = require('http');
 const path = require('path');
 const socketio = require('socket.io');
+const formatMessage = require('./utils/messages');
 
 // Initializing an express application, http server
 const app = express();
@@ -12,22 +13,24 @@ const io = socketio(server);
 // Setting up middleware that allows express app to serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 
+const botName = 'MercuryBot';
+
 // Run a callback function when a client connects
 io.on('connection', (socket) => {
     // Sent to the client
-    socket.emit('message', 'Welcome to Mercury!');
+    socket.emit('message', formatMessage(botName, 'Welcome to Mercury!'));
 
     // Sent to everyone but the client
-    socket.broadcast.emit('message', 'A new user has joined the chat!');
+    socket.broadcast.emit("message", formatMessage(botName, "A new user has joined the chat!"));
 
     socket.on('disconnect', () => {
         // Sent to everyone
-        io.emit('message', 'A user has disconnected from the chat!');
+        io.emit('message', formatMessage(botName, 'A user has disconnected from the chat!'));
     });
 
-    
+
     socket.on('chatMessage', (msg) => {
-        io.emit('message', msg);
+        io.emit('message', formatMessage('User',msg));
     });
 
 });
