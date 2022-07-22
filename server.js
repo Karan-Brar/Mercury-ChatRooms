@@ -5,14 +5,34 @@ const path = require('path');
 const socketio = require('socket.io');
 const formatMessage = require('./utils/messages');
 const { userJoin, getUser, getRoomUsers, userLeaveRoom} = require('./utils/users')
+const { sequelize, User, Message, Room} = require("./database");
+const bodyParser = require('body-parser');
 
 // Initializing an express application, http server
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
+
+
 // Setting up middleware that allows express app to serve static files
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.get("/getRooms", async (req, res) => {
+  const rooms = await Room.findAll();
+  const roomNames = rooms.map(room => room.Roomname)
+  res.json( roomNames );
+});
+
+// This is only for populating the database through using this endpoint from postman
+// app.post("/createRoom", async(req, res) => {
+//   let roomName = req.body.roomname;
+//   const room = await Room.create({ Roomname: roomName });
+//   res.json( room );
+// });
 
 const botName = 'MercuryBot';
 

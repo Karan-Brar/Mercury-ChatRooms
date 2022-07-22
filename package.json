@@ -4,14 +4,19 @@
   "description": "A web application which has chat rooms and real-time chat functionality",
   "main": "server.js",
   "scripts": {
-    "start":"node server",
-    "dev":"nodemon server"
+    "start": "node server",
+    "dev": "nodemon server"
   },
   "author": "Karanvir Brar",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.0",
+    "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "moment": "^2.29.4",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.21.3",
     "socket.io": "^4.5.1"
   }
 }
