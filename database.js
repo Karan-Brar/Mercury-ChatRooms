@@ -74,6 +74,7 @@ Message.init({
 });
 
 Room.hasMany(User);
+User.belongsTo(Room);
 User.hasMany(Message);
 Room.hasMany(Message);
 

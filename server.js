@@ -23,8 +23,30 @@ app.use(bodyParser.json());
 
 app.get("/getRooms", async (req, res) => {
   const rooms = await Room.findAll();
-  const roomNames = rooms.map(room => room.Roomname)
-  res.json( roomNames );
+  const roomNames = rooms.map((room) => room.Roomname);
+  res.json(roomNames);
+});
+
+app.post("/createUser", async (req, res) => {
+  const userData = req.body;
+  const room = await Room.findOne({ where: { Roomname: userData.room } });
+  const roomId = room.ID;
+  console.log("Before Await!")
+  const existingUsers = await User.findAll({where: {Username: userData.username}, include: Room})
+  console.log("After Await!");
+  console.log(existingUsers);
+
+  if(Object.keys(existingUsers).length != 0)
+  {
+    const existingRoomUser = existingUsers.filter(user => user.Room.ID === roomId)[0];
+    console.log(existingUser);
+    if(existingRoomUser !== 'undefined')
+    {
+      res.json( { userExists: true  } );
+    }
+  }
+
+  res.json({ userExists: false });
 });
 
 // This is only for populating the database through using this endpoint from postman
