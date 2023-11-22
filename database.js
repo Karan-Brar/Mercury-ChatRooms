@@ -1,15 +1,7 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 require("dotenv").config();
 
-const sequelize = new Sequelize(
-  process.env.DATABASE_NAME,
-  process.env.DB_USER,
-  process.env.PASSWORD,
-  {
-    host: process.env.HOST,
-    dialect: "postgres",
-  }
-);
+const sequelize = new Sequelize(process.env.URI)
 
 async function checkConnection() {
   try {
@@ -53,6 +45,14 @@ Room.init(
     Roomname: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
     },
   },
   {
