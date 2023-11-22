@@ -5,7 +5,7 @@ const baseURL = "https://mercury-chatrooms.onrender.com/";
 
 document.addEventListener(
   "load",
-  fetch(baseURL + "/getRooms")
+  fetch(baseURL + "getRooms")
     .then((response) => response.json())
     .then((data) => fillRoomOptions(data))
 );
@@ -17,7 +17,7 @@ submitBtn.addEventListener('click', (e) => {
   let room = document.getElementById("room").value;
 
   const data = {username, room};
-  fetch(baseURL + "/createUser", {
+  fetch(baseURL + "createUser", {
     method: 'POST',
     headers: {
       'Content-type': 'application/json',
@@ -33,7 +33,7 @@ submitBtn.addEventListener('click', (e) => {
     }
     else
     {
-      window.location = baseURL + "/chat.html";
+      window.location = baseURL + "chat.html";
     }
   })
   .catch((error) => {
