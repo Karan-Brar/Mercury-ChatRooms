@@ -1,7 +1,7 @@
 let roomsList = document.getElementById('room');
 const submitBtn = document.getElementById("submitBtn");
 
-const baseURL = "https://mercury-chatrooms-production.up.railway.app/";
+const baseURL = "https://mercury-chatrooms.onrender.com/";
 
 document.addEventListener(
   "load",
