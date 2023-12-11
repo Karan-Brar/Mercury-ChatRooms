@@ -1,12 +1,12 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 require("dotenv").config();
 
-const sequelize = new Sequelize(process.env.URI)
+const sequelize = new Sequelize(process.env.URI, {logging:false})
 
 async function checkConnection() {
   try {
     await sequelize.authenticate();
-    console.log("Connection has been established successfully.");
+    console.log("Connection has been established successfully");
   } catch (error) {
     console.error("Unable to connect to the database:", error);
   }
@@ -22,8 +22,9 @@ class Message extends Model {}
 User.init(
   {
     ID: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       primaryKey: true,
+      autoIncrement: true,
     },
     Username: {
       type: DataTypes.STRING,
@@ -31,7 +32,7 @@ User.init(
     },
   },
   {
-    sequelize
+    sequelize,
   }
 );
 
@@ -80,6 +81,7 @@ Room.hasMany(Message);
 
 async function createTables(){
     await sequelize.sync({ alter: true });
+    console.log("Sync completed")
 }
 
 createTables();

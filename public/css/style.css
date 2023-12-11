@@ -184,6 +184,12 @@ a {
 	width: 100%;
 }
 
+#username-error{
+	color: #d9534f;
+	margin-top: 5px;
+	display: none;
+}
+
 @media (max-width: 700px) {
 	.chat-main {
 		display: block;
